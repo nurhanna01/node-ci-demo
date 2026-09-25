@@ -29,7 +29,7 @@ pipeline {
                 docker stop node-ci-demo-running || true
                 docker rm node-ci-demo-running || true
                 docker pull $IMAGE_NAME:latest
-                docker run -d --name node-ci-demo-running -p 300:3000 $IMAGE_NAME:latest
+                docker run -d --name node-ci-demo-running -p 3001:3000 $IMAGE_NAME:latest
                 '''
             }
         }
