@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh '============= STEP 1: BUILD IMAGE ================'
+                sh 'echo "============= STEP 1: BUILD IMAGE ================"'
                 sh 'docker build -t $IMAGE_NAME:latest .'
             }
         }
@@ -19,7 +19,7 @@ pipeline {
                         passwordVariable: 'PASS'
                     )
                 ]) {
-                    sh '============= STEP 2: PUSH IMAGE ================'
+                    sh 'echo "============= STEP 2: PUSH IMAGE ================"'
                     sh 'echo $PASS | docker login ghcr.io -u $USER --password-stdin'
                     sh 'docker push $IMAGE_NAME:latest'
                 }
@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                sh '============= STEP 3: RUN IMAGE ================'
+                echo "============= STEP 3: RUN IMAGE ================"
                 docker stop node-ci-demo-running || true
                 docker rm node-ci-demo-running || true
                 docker pull $IMAGE_NAME:latest
