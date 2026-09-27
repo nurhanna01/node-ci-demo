@@ -6,6 +6,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                script {
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} node-ci-demo"
+                }
                 sh 'echo "============= STEP 1: BUILD IMAGE ================"'
                 sh 'docker build -t $IMAGE_NAME:latest .'
             }
