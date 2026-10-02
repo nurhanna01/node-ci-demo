@@ -1,13 +1,17 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'SERVICE_NAME', defaultValue: 'node-ci-demo', description: 'Nama image hasil di-build')
+        choice(name: 'BRANCH', choices: ['main'], description: 'Branch yang mau di-deploy')
+    }
     environment {
-        IMAGE_NAME = 'ghcr.io/nurhanna01/node-ci-demo'
+        IMAGE_NAME = "ghcr.io/nurhanna01/${params.SERVICE_NAME}"
     }
     stages {
         stage('Build') {
             steps {
                 script {
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} node-ci-demo"
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} ${params.SERVICE_NAME}"
                 }
                 sh 'echo "============= STEP 1: BUILD IMAGE ================"'
                 sh 'docker build -t $IMAGE_NAME:latest .'
